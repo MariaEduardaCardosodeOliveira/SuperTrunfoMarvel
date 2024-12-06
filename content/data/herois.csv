@@ -1,0 +1,41 @@
+Nome;Identidade;Peso;Altura;Primeira Aparicao;Forca;Inteligencia
+Capitã Marvel;Carol Danvers;74.23;1.80;1968;90;3
+Cavaleiro da Lua;Marc Spector;101.35;1.89;1975;40;2
+Deadpool;Wade Wilson;95.32;1.88;1991;35;2
+Doutor Destino;Victor von Doom;187.41;2.01;1962;35;3
+Doutor Estranho;Stephen Strange;81.14;1.89;1963;10;3
+Ego;Ego;10²³;8.5;1966;80;3
+Fênix;Jean Grey; 52.07;1.68;1963;100;3
+Fênix Negra;Jean Grey; 52.07;1.68;1963;150;3
+Feiticeira Escarlate;Wanda Maximoff;59.69;1.70;1964;10;3
+Gambit;Remy Etienne LeBeau;81.57;1.85;1990;10;2
+Homem de Ferro;Tony Stark;191.88;1.98;1963;85;3
+Homem-Aranha;Miles Morales;56.06;1.57;2011;10;1
+Kang;Nathaniel Richards;104.95;1.91;1964;50;3
+Loki; Loki Laufeyson;238;1.92;1949;50;3
+Magneto;Erik Magnus Lensherr;86.40;1.88;1963;80;3
+Mantis;Mantis;52.17;1.69;1973;10;1
+Pantera Negra;T'Challa;90.50;1.83;1966;20;3
+Rocket Raccoon;Rocket Raccoon;25.73;1.22;1976;5;2
+Senhor Fantástico;Reed Richards;81.68;1.85;1961;10;3
+Shang-Chi;Shang-Chi;79.38;1.78;1973;15;1
+Soldado Invernal;Bucky Barnes;117.21;1.75;1941;35;2
+Tempestade;Ororo Munroe;57.50;1.80;1975;10;1
+Thor;Thor Odinson;288.61;1.98;1962;100;1
+Ultron;Ultron;331.61;2.07;1968;85;3
+Ultron Supremo;Ultron;250;2.07;1968;100;3
+Vampira;Anna Marie;54.43;1.73;1981;50;1
+Vigia;Uatu;600;7.5;1963;80;3
+Visão;Visão;135.95;1.92;1968;75;3
+Viúva Negra;Natasha Romanoff;59.34;1.70;1964;15;1
+Wiccano;Billy Kaplan;68.04;1.76;2005;10;3
+X-23;Laura Kinney;55.34;1.65;2004;25;2
+Galactus;Galan;10²⁸;9;1960;200;5
+
+
+/*
+Inteligencia: 1 - Bom;2 - Medio; 3 - Alto; 4 - Superior; 5 - Deus
+
+Ver para o gpt colocar apenas 4 personagens com forca entre 150 e 190 e outos 2 personagens com 4 de inteligencia.
+Alem de atualizar a forca deles ate 149
+*/
