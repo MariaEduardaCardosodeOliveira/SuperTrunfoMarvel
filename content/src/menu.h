@@ -1,9 +1,9 @@
 /*
-◦ Para gerenciar um Deck de cartas no estilo Super Trunfo, defina uma estrutura Carta
+◦ Para gerenciar um Cartas de Cartass no estilo Super Trunfo, defina uma estrutura Cartas
 contendo, no mínimo: nome (texto), uma letra(char), um número(int), um boleano para
-saber se é a carta super trunfo (bool) e mais 4 atributos numéricos (int ou float). Deverá
-permitir cadastrar (inserir/listar/pesquisar/alterar/excluir) as cartas disponíveis. Essa
-relação deve aumentar e diminuir dinamicamente. Cada deck tem no mínimo 32 cartas
+saber se é a Cartas super trunfo (bool) e mais 4 atributos numéricos (int ou float). Deverá
+permitir cadastrar (inserir/listar/pesquisar/alterar/excluir) as Cartass disponíveis. Essa
+relação deve aumentar e diminuir dinamicamente. Cada Cartas tem no mínimo 32 Cartass
 com os códigos compostos por letras de A a D e números de 1 a 8 (ou mais caso
 necessário).
 
@@ -24,19 +24,22 @@ typedef struct{
     int numero;
     bool superTrunfo;
     float atributoNumerico1, atributoNumerico2, atributoNumerico3, atributoNumerico4;
-}Carta;
+}Cartas;
 
-// TABELA
-void realocarTabela(Table *tabela, int valor);
-int VerificaExistenciaTabela(Table *tabela, char *pais, int contadorTabela);
-void listarTabela(Table *tabela, int contadorTabela, int cond, int paginaMax);
-void apresentarTabela(Medalha *vetor, int tamanho);
+// Cartas
+void realocarDeck(Cartas *deck, int valor);
+int verificaExistenciaDeck(Cartas *deck, char *nome, int contadorCartas);
+void listarDeck(Cartas *deck, int contadorCartas, int cond);
+void apresentarDeck(Cartas *vetor, int tamanho);
 
 // MENU
 void beep();
 void MensagemErro();
 void exibeMenuPrincipal();
-void exibeMenuMedalhas();
-void chamaMenu(Medalha *vetor, int *contador);
+void exibeMenuCartas();
+void chamaMenu(Cartas *vetor, int *contador);
 
 #endif
+
+
+//tabela -> deck ; table -> cartas; contadorTabela -> contadorCartas

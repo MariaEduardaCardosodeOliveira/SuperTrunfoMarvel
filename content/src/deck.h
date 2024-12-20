@@ -8,7 +8,7 @@ com os códigos compostos por letras de A a D e números de 1 a 8 (ou mais caso
 necessário).
 */
 
-#ifndef CARTA_H
+#ifndef CARTA_H // Nao teria que ser DECK_H?
 #define CARTA_H
 #include <stdlib.h>
 #include <stdio.h>
