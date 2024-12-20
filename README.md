@@ -34,12 +34,12 @@ arquivo texto no formato .CSV (separados por vírgula);
 
 ## Funcionalidades
 
-- Cadastro de medalhas
-- Listagem de medalhas
-- Pesquisa de medalhas
-- Alteração de medalhas
-- Exclusão de medalhas
-- Geração de tabelas de medalhas por edição dos jogos olímpicos
+- Cadastro de cartas
+- Listagem de cartas
+- Pesquisa de cartas
+- Alteração de cartas
+- Exclusão de cartas
+- Geração de tabelas de cartas por edição dos jogos olímpicos
 - Exportação de dados para CSV
 - Salvamento e carregamento de dados em arquivos binários
 
@@ -49,14 +49,14 @@ arquivo texto no formato .CSV (separados por vírgula);
 super-trunfo/
 │
 ├── src/
-│   ├── medalha.c
-│   ├── medalha.h
+│   ├── carta.c
+│   ├── carta.h
 │   ├── main.c
 │   └── ...
 │
 ├── data/
-│   ├── medalhas.csv
-│   └── medalhas.dat
+│   ├── cartas.csv
+│   └── cartas.dat
 │
 ├── Makefile
 └── README.md
