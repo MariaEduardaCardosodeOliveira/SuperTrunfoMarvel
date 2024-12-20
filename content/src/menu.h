@@ -19,24 +19,25 @@ Trate erros do usuário com mensagens e alertas;
 
 // STRUCT DA TABELA
 typedef struct{
+    /*
     char nome[50];
     char letra[1];
     int numero;
     bool superTrunfo;
-    float atributoNumerico1, atributoNumerico2, atributoNumerico3, atributoNumerico4;
-}Carta;
+    */
+}Table;
 
 // TABELA
 void realocarTabela(Table *tabela, int valor);
 int VerificaExistenciaTabela(Table *tabela, char *pais, int contadorTabela);
 void listarTabela(Table *tabela, int contadorTabela, int cond, int paginaMax);
-void apresentarTabela(Medalha *vetor, int tamanho);
+void apresentarTabela(Carta *vetor, int tamanho);
 
 // MENU
 void beep();
 void MensagemErro();
 void exibeMenuPrincipal();
 void exibeMenuMedalhas();
-void chamaMenu(Medalha *vetor, int *contador);
+void chamaMenu(Carta *vetor, int *contador);
 
 #endif
