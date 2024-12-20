@@ -10,7 +10,7 @@
 #include <math.h>
 #include <string.h>
 // INCLUINDO CABEÇALHOS
-#include "medalha.h"
+#include "deck.h"
 #include "funcoes.h"
 #include "arquivos.h"
 #include "menu.h"
