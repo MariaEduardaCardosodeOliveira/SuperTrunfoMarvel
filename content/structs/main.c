@@ -1,4 +1,0 @@
-/*
-1º - CRIAR MENU;
-2º - CHAMAR FUNÇÕES 
-*/

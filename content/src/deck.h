@@ -8,6 +8,8 @@ com os códigos compostos por letras de A a D e números de 1 a 8 (ou mais caso
 necessário).
 */
 
+#ifndef CARTA_H
+#define CARTA_H
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -20,6 +22,14 @@ typedef struct{
     float atributoNumerico1, atributoNumerico2, atributoNumerico3, atributoNumerico4;
 }Carta;
 
+void inserir_cartas(Carta **cartas, int *numCartas);
 
+void listar_cartas(Carta *cartas, int numCartas);
 
-//CHAMAR FUNÇÕES CRIADAS NOS OUTROS ARQUIVOS
+int pesquisar_cartas(Carta *cartas, int numCartas);
+
+void alterar_carta(Carta *cartas, int quantidade_de_cartas);
+
+void excluir_carta(Carta *cartas, int *numCartas);
+
+#endif

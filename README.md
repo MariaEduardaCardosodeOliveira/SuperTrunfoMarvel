@@ -1,5 +1,7 @@
 # Super Trunfo Marvel
 
+## Definição
+
 Nesta atividade os alunos deverão desenvolver um sistema que permita a criação e
 manipulação de baralhos no estilo “Super Trunfo”. O sistema deve ser desenvolvido utilizando a
 linguagem C e os conceitos visto em sala de aula.
@@ -30,4 +32,31 @@ criados e uma mensagem de boas vindas deve ser apresentada ao usuário;
 arquivo texto no formato .CSV (separados por vírgula); 
 
 
-## TESTE
+## Funcionalidades
+
+- Cadastro de medalhas
+- Listagem de medalhas
+- Pesquisa de medalhas
+- Alteração de medalhas
+- Exclusão de medalhas
+- Geração de tabelas de medalhas por edição dos jogos olímpicos
+- Exportação de dados para CSV
+- Salvamento e carregamento de dados em arquivos binários
+
+## Estrutura do Projeto
+
+```plaintext
+super-trunfo/
+│
+├── src/
+│   ├── medalha.c
+│   ├── medalha.h
+│   ├── main.c
+│   └── ...
+│
+├── data/
+│   ├── medalhas.csv
+│   └── medalhas.dat
+│
+├── Makefile
+└── README.md
