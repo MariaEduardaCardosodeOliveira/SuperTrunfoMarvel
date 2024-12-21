@@ -11,7 +11,7 @@
 #include <string.h>
 // INCLUINDO CABEÇALHOS
 #include "deck.h"
-//#include "arquivos.h"
+#include "arquivos.h"
 #include "menu.h"
 
 // CONFIGURAÇÃO SISTEMA OPERACIONAL
