@@ -63,17 +63,7 @@ void listarDeck(Cartas *deck, int contadorCartas, int cond)
     printf("\033[0m"); // Reseta cor
     int i = 0;
     int lim = cond * 16;
-    // caso cond == 1 é a primeira opcao, onde o 0 começa na apresentacao do for, caso for diferente ele comeca por outro
-    /*if (cond != 1)
-    {
-        i = cond * 10; //Nao entendi o que ele quis aqui
-    }
-     caso cond(paginaDesejada) == paginaMax(maximo de paginas)
-    //  entao o limite deve ser o tamanho do contador da tabela, e nao até 20*cond
-    if (cond == paginaMax)
-    {
-        lim = contadorTabela;
-    }*/
+
     for (i = i; i < lim; i++)
     {
         printf("%-30s %-5c %-5d %-5d %-5i %-5i %-5i \n", deck[i].nome, deck[i].letra, deck[i].numero, deck[i].peso, deck[i].primeiraAparicao, deck[i].forca, deck[i].inteligencia);
@@ -88,7 +78,7 @@ void apresentaDeck(Cartas *vetor, int tamanho){ // É aqui que adiciona uma nova
 
     int auxiliar = 0;
 
-    realocaTabela(&deck, contadorDeck);
+    realocaDeck(&deck, contadorDeck);
     int pagina = (contadorDeck + n - 1) / n; // Calculando o número de páginas necessárias
     int leitor = 0;
     do
@@ -106,14 +96,14 @@ void apresentaDeck(Cartas *vetor, int tamanho){ // É aqui que adiciona uma nova
                 printf("\033[0m");
             }
         } while (leitor < -1 || leitor > pagina);
-        // caso tenha digitado valor certo, lista tabela
+        // caso tenha digitado valor certo, lista deck
         if (leitor != -1)
         {
-            listarTabela(deck, contadorDeck, leitor, pagina);
+            listarDeck(deck, contadorDeck, leitor, pagina);
         }
     } while (leitor != -1);
     printf("\033[1;34m"); // Cor azul
-    printf("Saindo da tabela\n");
+    printf("Saindo do deck\n");
     printf("\033[0m"); // Reseta cor
 
     free(deck);
@@ -241,7 +231,7 @@ void chamaMenu(Cartas *vetor, int *contador)
 
         // opcao 2 menu principal
         case 2:
-            // Gera tabela
+            // Gera deck
             apresentarDeck(vetor, *contador);
             break;
             // opcao 3 menu principal
