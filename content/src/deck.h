@@ -16,10 +16,15 @@ necessário).
 
 typedef struct{
     char nome[50];
+    char codigo[10];
     char letra[1];
     int numero;
     bool superTrunfo;
-    float atributoNumerico1, atributoNumerico2, atributoNumerico3, atributoNumerico4;
+    char identidade[50];
+    float peso;
+    int primeiraAparicao;
+    int forca;
+    int inteligencia;
 }Carta;
 
 void inserir_cartas(Carta **cartas, int *numCartas);

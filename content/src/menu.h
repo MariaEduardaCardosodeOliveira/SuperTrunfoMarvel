@@ -23,7 +23,10 @@ typedef struct{
     char letra[1];
     int numero;
     bool superTrunfo;
-    float atributoNumerico1, atributoNumerico2, atributoNumerico3, atributoNumerico4;
+    float peso;
+    int primeiraAparicao;
+    int forca;
+    int inteligencia;
 }Cartas;
 
 // Cartas
@@ -41,5 +44,3 @@ void chamaMenu(Cartas *vetor, int *contador);
 
 #endif
 
-
-//tabela -> deck ; table -> cartas; contadorTabela -> contadorCartas

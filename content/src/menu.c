@@ -58,7 +58,7 @@ int verificaSeExisteDeck(Cartas *deck, char *nome, int contadorDeck)
 void listarDeck(Cartas *deck, int contadorCartas, int cond)
 {
     printf("\033[1;34m"); // Cor azul
-    printf("%-30s %-5c %-5d %-5i %-5i %-5i %-5i \n", "Nome", "Letra", "Numero", "atributoNumerico1", "atributoNumerico2", "atributoNumerico3", "atributoNumerico4");
+    printf("%-30s %-5c %-5d %-5d %-5i %-5i %-5i \n", "Nome", "Letra", "Numero", "peso", "primeiraAparicao", "forca", "inteligencia");
     printf("------------------------------------------------------------\n");
     printf("\033[0m"); // Reseta cor
     int i = 0;
@@ -76,13 +76,49 @@ void listarDeck(Cartas *deck, int contadorCartas, int cond)
     }*/
     for (i = i; i < lim; i++)
     {
-        printf("%-30s %-5c %-5d %-5d\n", deck[i].nome, deck[i].letra, deck[i].numero, deck[i].atributoNumerico1, deck[i].atributoNumerico2, deck[i].atributoNumerico3, deck[i].atributoNumerico4);
+        printf("%-30s %-5c %-5d %-5d %-5i %-5i %-5i \n", deck[i].nome, deck[i].letra, deck[i].numero, deck[i].peso, deck[i].primeiraAparicao, deck[i].forca, deck[i].inteligencia);
     }
 }
 
-/*void apresentaDeck(Cartas *vetor, int tamanho) // É aqui que adiciona uma nova carta, entao vou mexer depois
+void apresentaDeck(Cartas *vetor, int tamanho){ // É aqui que adiciona uma nova carta, entao vou mexer depois
+    int n = 32;
+    Cartas *deck = (Cartas*) malloc(n * sizeof(Cartas));
+    int limiteDeck = 32;
+    int contadorDeck = 0;
 
-}*/
+    int auxiliar = 0;
+
+    realocaTabela(&deck, contadorDeck);
+    int pagina = (contadorDeck + n - 1) / n; // Calculando o número de páginas necessárias
+    int leitor = 0;
+    do
+    {
+        // dowhile para verificacao do range permitido
+        do
+        {
+
+            printf("Digite a pagina desejada, -1 para sair, limite de pagina %d: ", pagina);
+            scanf("%d", &leitor);
+            if (leitor < -1 || leitor > pagina)
+            {
+                printf("\e[1;31m");
+                printf("Valor invalido! Tente novamente.\n");
+                printf("\033[0m");
+            }
+        } while (leitor < -1 || leitor > pagina);
+        // caso tenha digitado valor certo, lista tabela
+        if (leitor != -1)
+        {
+            listarTabela(deck, contadorDeck, leitor, pagina);
+        }
+    } while (leitor != -1);
+    printf("\033[1;34m"); // Cor azul
+    printf("Saindo da tabela\n");
+    printf("\033[0m"); // Reseta cor
+
+    free(deck);
+
+}
 
 #ifdef OS_Windows
 // função para beep
