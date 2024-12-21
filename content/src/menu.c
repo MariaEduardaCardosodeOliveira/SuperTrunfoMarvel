@@ -97,7 +97,7 @@ void apresentaDeck(Cartas *vetor, int tamanho){ // É aqui que adiciona uma nova
         do
         {
 
-            printf("Digite a pagina desejada, -1 para sair, limite de pagina %d: ", pagina);
+            printf("Digite a pagina desejada, -1 para sair, limite de pagina %d: ", pagina); 
             scanf("%d", &leitor);
             if (leitor < -1 || leitor > pagina)
             {
