@@ -3,6 +3,70 @@
 #include "arquivos.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
+void jogar_partida(Deck *deck) {
+    if (deck->tamanho < 2) {
+        printf("Deck não tem cartas suficientes para jogar!\n");
+        return;
+    }
+
+    srand(time(NULL));  
+
+    // Sorteia uma carta para o jogador e uma para o bot 
+    int indiceJogador = rand() % deck->tamanho;
+    int indiceCPU = rand() % deck->tamanho;
+    int escolha;
+
+    Carta cartaJogador = deck->cartas[indiceJogador];
+    Carta cartaCPU = deck->cartas[indiceCPU];
+
+    printf("\nSua carta: %s\n", cartaJogador.nome);
+    printf("1. Força: %d\n", cartaJogador.forca);
+    printf("2. Inteligência: %d\n", cartaJogador.inteligencia);
+    printf("3. Peso: %.2f\n", cartaJogador.peso);
+    printf("4. Altura: %.2f\n", cartaJogador.altura);
+    printf("Escolha o atributo para competir (1-4): ");
+
+    scanf("%d", &escolha);
+
+    int atributoJogador, atributoCPU;
+    switch (escolha) {
+        case 1:
+            atributoJogador = cartaJogador.forca;
+            atributoCPU = cartaCPU.forca;
+            printf("A carta do CPU tem Força: %d\n", atributoCPU);
+            break;
+        case 2:
+            atributoJogador = cartaJogador.inteligencia;
+            atributoCPU = cartaCPU.inteligencia;
+            printf("A carta do CPU tem Inteligência: %d\n", atributoCPU);
+            break;
+        case 3:
+            atributoJogador = cartaJogador.peso;
+            atributoCPU = cartaCPU.peso;
+            printf("A carta do CPU tem Peso: %.2f\n", cartaCPU.peso);
+            break;
+        case 4:
+            atributoJogador = cartaJogador.altura;
+            atributoCPU = cartaCPU.altura;
+            printf("A carta do CPU tem Altura: %.2f\n", cartaCPU.altura);
+            break;
+        default:
+            printf("Opção inválida!\n");
+            return;
+    }
+
+    // Verifica quem venceu a rodada
+    if (atributoJogador > atributoCPU) {
+        printf("\nVocê venceu esta rodada!\n");
+    } else if (atributoJogador < atributoCPU) {
+        printf("\nO CPU venceu esta rodada!\n");
+    } else {
+        printf("\nEmpate!\n");
+    }
+}
+
 
 void exibir_menu(Deck *deck) {
     int opcao;
@@ -15,7 +79,9 @@ void exibir_menu(Deck *deck) {
         printf("5. Remover Carta\n");
         printf("6. Alterar Carta\n");
         printf("7. Salvar Deck em CSV\n");
-        printf("8. Sair\n");
+        printf("8. Iniciar Campeonato\n"); 
+        printf("0. Sair\n");
+
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
 
@@ -111,9 +177,12 @@ void exibir_menu(Deck *deck) {
                 salvar_deck_csv(deck, "data/deck.csv");
                 printf("Deck salvo em CSV.\n");
                 break;
-            case 8:
+            case 0:
                 printf("Saindo...\n");
                 break;
+            case 8:
+            jogar_partida(deck);
+            break;
             default:
                 printf("Opção inválida.\n");
         }

@@ -53,5 +53,7 @@ void chamaMenu(Cartas *vetor, int *contador);
 #include "deck.h"
 
 void exibir_menu(Deck *deck);
+void iniciar_campeonato(Deck *deck);
+
 
 #endif // MENU_H
