@@ -1,283 +1,114 @@
-/*
-Para gerenciar um Deck de cartas no estilo Super Trunfo, 
-defina uma estrutura Carta contendo, no mínimo: 
-nome (texto), 
-uma letra(char), 
-um número(int), 
-um boleano para saber se é a carta super trunfo (bool) 
-e mais 4 atributos numéricos (int ou float). 
-Deverá permitir cadastrar (inserir/listar/pesquisar/alterar/excluir) as cartas disponíveis. Essa
-relação deve aumentar e diminuir dinamicamente. Cada deck tem no mínimo 32 cartas
-com os códigos compostos por letras de A a D e números de 1 a 8 (ou mais caso
-necessário).
-*/
-
-// INCLUINDO CABEÇALHOS
 #include "deck.h"
-#include "arquivos.h"
-#include "funcoes.h"
-// IMPORTANDO BIBLIOTECAS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-
-//inserir uma nova carta em um array dinâmico de cartas.
-void inserir_cartas(Carta **cartas, int *numCartas){
-    *cartas = realloc(*cartas, (*numCartas + 1) * sizeof(Carta));
-    if (*cartas == NULL)
-    {
-        printf("Erro ao relocar memória\n");
-        exit(EXIT_FAILURE);
-    }
-
-    printf("Digite o nome do personagem da sua nova carta:\n");
-    setbuf(stdin, NULL);
-    leString((*cartas)[*numCartas].nome, 50);
-
-    printf("Digite uma letra para sua nova carta:\n");
-    setbuf(stdin, NULL);
-    scanf("%c", &(*cartas)[*numCartas].letra);
-
-    printf("Digite um número para sua nova carta:\n");
-    scanf("%d", &(*cartas)[*numCartas].numero);
-
-    // Gerar código combinando letra e número
-    snprintf((*cartas)[*numCartas].codigo, 10, "%c%d", (*cartas)[*numCartas].letra, (*cartas)[*numCartas].numero);
-
-    printf("Digite (0) para adicionar SUPERTRUNFO ou (1) para adicionar demais cartas");
-    scanf("%d", &(*cartas)[*numCartas].superTrunfo);
-
-    printf("Digite a identidade do seu novo personagem:\n");
-    setbuf(stdin, NULL);
-    leString((*cartas)[*numCartas].identidade, 50);
-
-    printf("Digite o peso do seu novo personagem:\n");
-    scanf("%f", &(*cartas)[*numCartas].peso);
-
-    printf("Digite o ano da primeira aparição do seu novo personagem: ");
-    setbuf(stdin, NULL);
-    scanf("%d",&(*cartas)[*numCartas].primeiraAparicao);
-
-    printf("Digite o valor da força do seu novo personagem:\n");
-    scanf("%f", &(*cartas)[*numCartas].forca);
-
-    printf("Digite o valor da inteligência do seu novo personagem(valor entre 0 a 5):\n");
-    scanf("%f", &(*cartas)[*numCartas].inteligencia);
-
-    (*cartas)[*numCartas].contador = *numCartas + 1;
-    printf("Carta adicionada com sucesso! Código da carta: %d\n", (*cartas)[*numCartas].codigo);
-    (*numCartas)++;
-
-    return;
+// Inicializa o deck
+void inicializar_deck(Deck *deck) {
+    deck->cartas = NULL; // Inicializa o vetor de cartas como NULL
+    deck->tamanho = 0;   // Inicializa o tamanho do deck como 0
 }
 
-void listar_cartas(Cartas *cartas, int numCartas){    
-    if (numCartas == 0) {
-        printf("Nenhuma carta cadastrada.\n");
+// Adiciona uma carta ao deck
+void adicionar_carta(Deck *deck, Carta carta) {
+    // Aumenta o tamanho do deck
+    deck->tamanho++;
+    // Realoca memória para o novo tamanho
+    deck->cartas = (Carta *)realloc(deck->cartas, deck->tamanho * sizeof(Carta));
+    if (deck->cartas == NULL) {
+        printf("Erro ao alocar memória.\n");
+        exit(1);
+    }
+    // Adiciona a nova carta ao final do deck
+    deck->cartas[deck->tamanho - 1] = carta;
+}
+
+void remover_carta(Deck *deck, int indice) {
+    if (indice < 0 || indice >= deck->tamanho) {
+        printf("Índice inválido.\n");
         return;
     }
-
-    printf("\n=== Cartas Cadastradas ===\n");
-    printf("+--------+---------------------+-------+------+---------------+-------+--------------+------------+------------+\n");
-    printf("| Código | Nome                | Letra | Nº   | Super Trunfo  | Peso  | 1ª Aparição  | Força      | Inteligência |\n");
-    printf("+--------+---------------------+-------+------+---------------+-------+--------------+------------+------------+\n");
-
-    for (int i = 0; i < numCartas; i++) {
-        printf("| %-6s | %-19s | %-5c | %-4d | %-13s | %-5.1f | %-12d | %-10d | %-12d |\n",
-               cartas[i].codigo,
-               cartas[i].nome,
-               cartas[i].letra,
-               cartas[i].numero,
-               cartas[i].superTrunfo ? "Sim" : "Não",
-               cartas[i].peso,
-               cartas[i].primeiraAparicao,
-               cartas[i].forca,
-               cartas[i].inteligencia);
+    
+    // Move as cartas subsequentes para preencher o espaço da carta removida
+    for (int i = indice; i < deck->tamanho - 1; i++) {
+        deck->cartas[i] = deck->cartas[i + 1];
     }
 
-    printf("+--------+-------------------+-------+--------------+-----------+-------------+------------+\n");
+    // Reduz o tamanho do deck
+    deck->tamanho--;
+
+    // Realoca memória para o novo tamanho, se necessário
+    if (deck->tamanho > 0) {
+        deck->cartas = (Carta *)realloc(deck->cartas, deck->tamanho * sizeof(Carta));
+        if (deck->cartas == NULL) {
+            printf("Erro ao realocar memória.\n");
+            exit(1); // Em caso de falha, podemos encerrar o programa ou retornar com erro
+        }
+    } else {
+        // Se o deck ficou vazio, libera a memória
+        free(deck->cartas);
+        deck->cartas = NULL;
+    }
+
+    printf("Carta removida com sucesso.\n");
 }
 
 
-void pesquisar_carta(Carta *cartas, int numCartas) {
-    int escolha;
-    printf("Escolha o atributo para pesquisa:\n");
-    printf("1 - Nome\n2 - Letra\n3 - Número\n4 - Força\n5 - Inteligência\n");
-    scanf("%d", &escolha);
-
-    switch (escolha) {
-        case 1: {
-            char nomePesquisado[50];
-            printf("Digite o nome da carta a ser pesquisada:\n");
-            setbuf(stdin, NULL);
-            leString(nomePesquisado, 50);
-            int encontrado = 0;
-            for (int i = 0; i < numCartas; i++) {
-                if (strcmp(cartas[i].nome, nomePesquisado) == 0) {
-                    printf("Carta encontrada: %s\n", cartas[i].nome);
-                    encontrado = 1;
-                    break;
-                }
-            }
-            if (!encontrado) {
-                printf("Carta não encontrada!\n");
-            }
-            break;
-        }
-        case 2: {
-            char letraPesquisada;
-            printf("Digite a letra da carta a ser pesquisada (A a D):\n");
-            scanf(" %c", &letraPesquisada);
-            int encontrado = 0;
-            for (int i = 0; i < numCartas; i++) {
-                if (cartas[i].letra == letraPesquisada) {
-                    printf("Carta encontrada: %s\n", cartas[i].nome);
-                    encontrado = 1;
-                }
-            }
-            if (!encontrado) {
-                printf("Nenhuma carta encontrada com essa letra!\n");
-            }
-            break;
-        }
-        case 3: {
-            int numeroPesquisado;
-            printf("Digite o número da carta a ser pesquisada:\n");
-            scanf("%d", &numeroPesquisado);
-            int encontrado = 0;
-            for (int i = 0; i < numCartas; i++) {
-                if (cartas[i].numero == numeroPesquisado) {
-                    printf("Carta encontrada: %s\n", cartas[i].nome);
-                    encontrado = 1;
-                }
-            }
-            if (!encontrado) {
-                printf("Nenhuma carta encontrada com esse número!\n");
-            }
-            break;
-        }
-        case 4: {
-            float forcaPesquisado;
-            printf("Digite o valor da força para pesquisa:\n");
-            scanf("%f", &forcaPesquisado);
-            int encontrado = 0;
-            for (int i = 0; i < numCartas; i++) {
-                if (cartas[i].forca >= forcaPesquisado) {
-                    printf("Carta encontrada: %s\n", cartas[i].nome);
-                    encontrado = 1;
-                }
-            }
-            if (!encontrado) {
-                printf("Nenhuma carta com força maior ou igual a %.2f\n", forcaPesquisado);
-            }
-            break;
-        }
-        case 5: {
-            float inteligenciaPesquisada;
-            printf("Digite o valor da inteligência para pesquisa (entre 0 a 5):\n");
-            scanf("%f", &inteligenciaPesquisada);
-            int encontrado = 0;
-            for (int i = 0; i < numCartas; i++) {
-                if (cartas[i].inteligencia >= inteligenciaPesquisada) {
-                    printf("Carta encontrada: %s\n", cartas[i].nome);
-                    encontrado = 1;
-                }
-            }
-            if (!encontrado) {
-                printf("Nenhuma carta com inteligência maior ou igual a %.2f\n", inteligenciaPesquisada);
-            }
-            break;
-        }
-        default:
-            printf("Opção inválida.\n");
-            break;
+// Lista todas as cartas do deck
+void listar_cartas(Deck *deck) {
+    if (deck->tamanho == 0) {
+        printf("O deck está vazio.\n");
+        return;
+    }
+    for (int i = 0; i < deck->tamanho; i++) {
+        printf("Carta %d:\n", i + 1);
+        printf("  Nome: %s\n", deck->cartas[i].nome);
+        printf("  Identidade: %s\n", deck->cartas[i].identidade);
+        printf("  Peso: %.2f\n", deck->cartas[i].peso);
+        printf("  Altura: %.2f\n", deck->cartas[i].altura);
+        printf("  Primeira Aparição: %d\n", deck->cartas[i].primeiraAparicao);
+        printf("  Força: %d\n", deck->cartas[i].forca);
+        printf("  Inteligência: %d\n", deck->cartas[i].inteligencia);
+        printf("  Código: %s\n", deck->cartas[i].codigo);
+        printf("  Super Trunfo: %s\n", deck->cartas[i].superTrunfo ? "Sim" : "Não");
+        printf("\n");
     }
 }
 
-
-void alterar_carta(Carta *cartas, int numCartas) {
-    char nomAlterar[50];
-    printf("Digite o nome da carta a ser alterada:\n");
-    setbuf(stdin, NULL);
-    leString(nomAlterar, 50);
-
-    int encontrado = 0;
-    for (int i = 0; i < numCartas; i++) {
-        if (strcmp(cartas[i].nome, nomAlterar) == 0) {
-            encontrado = 1;
-            printf("Carta encontrada: %s\n", cartas[i].nome);
-
-            // Alterar atributos
-            printf("Digite o novo nome do personagem:\n");
-            setbuf(stdin, NULL);
-            leString(cartas[i].nome, 50);
-
-            printf("Digite a nova letra da carta:\n");
-            scanf(" %c", &cartas[i].letra);
-
-            printf("Digite o novo número da carta:\n");
-            scanf("%d", &cartas[i].numero);
-
-            snprintf(cartas[i].codigo, 10, "%c%d", cartas[i].letra, cartas[i].numero);
-
-            printf("Digite (0) para SUPER TRUNFO ou (1) para demais cartas:\n");
-            scanf("%d", &cartas[i].superTrunfo);
-
-            printf("Digite a nova identidade do personagem:\n");
-            setbuf(stdin, NULL);
-            leString(cartas[i].identidade, 50);
-
-            printf("Digite o novo peso do personagem:\n");
-            scanf("%f", &cartas[i].peso);
-
-            printf("Digite o novo ano da primeira aparição:\n");
-            scanf("%d", &cartas[i].primeiraAparicao);
-
-            printf("Digite o novo valor da força do personagem:\n");
-            scanf("%f", &cartas[i].forca);
-
-            printf("Digite o novo valor da inteligência do personagem:\n");
-            scanf("%f", &cartas[i].inteligencia);
-
-            printf("Carta alterada com sucesso!\n");
-            break;
+// Pesquisa uma carta pelo nome
+Carta* pesquisar_carta_nome(Deck *deck, const char *nome) {
+    for (int i = 0; i < deck->tamanho; i++) {
+        if (strcmp(deck->cartas[i].nome, nome) == 0) {
+            return &deck->cartas[i]; // Retorna um ponteiro para a carta encontrada
         }
     }
-
-    if (!encontrado) {
-        printf("Carta não encontrada!\n");
-    }
+    return NULL; // Retorna NULL se a carta não for encontrada
 }
 
-
-void excluir_carta(Carta *cartas, int *numCartas) {
-    char nomeExcluir[50];
-    printf("Digite o nome da carta a ser excluída:\n");
-    setbuf(stdin, NULL);
-    leString(nomeExcluir, 50);
-
-    int encontrado = 0;
-    for (int i = 0; i < *numCartas; i++) {
-        if (strcmp(cartas[i].nome, nomeExcluir) == 0) {
-            encontrado = 1;
-            printf("Carta encontrada: %s\n", cartas[i].nome);
-
-            // Deslocar as cartas para remover a carta excluída
-            for (int j = i; j < *numCartas - 1; j++) {
-                cartas[j] = cartas[j + 1];
-            }
-
-            // Reduzir o tamanho do array de cartas
-            (*numCartas)--;
-            cartas = realloc(cartas, (*numCartas) * sizeof(Carta));
-
-            printf("Carta excluída com sucesso!\n");
-            break;
+// Pesquisa uma carta pelo código
+Carta* pesquisar_carta_codigo(Deck *deck, const char *codigo) {
+    for (int i = 0; i < deck->tamanho; i++) {
+        if (strcmp(deck->cartas[i].codigo, codigo) == 0) {
+            return &deck->cartas[i]; // Retorna um ponteiro para a carta encontrada
         }
     }
+    return NULL; // Retorna NULL se a carta não for encontrada
+}
 
-    if (!encontrado) {
-        printf("Carta não encontrada!\n");
+// Altera uma carta no deck
+void alterar_carta(Deck *deck, int indice, Carta novaCarta) {
+    if (indice < 0 || indice >= deck->tamanho) {
+        printf("Índice inválido.\n");
+        return;
     }
+    deck->cartas[indice] = novaCarta; // Substitui a carta no índice especificado
+}
+
+// Libera a memória alocada para o deck
+void liberar_deck(Deck *deck) {
+    if (deck->cartas != NULL) {
+        free(deck->cartas); // Libera a memória do vetor de cartas
+        deck->cartas = NULL;
+    }
+    deck->tamanho = 0; // Redefine o tamanho do deck como 0
 }

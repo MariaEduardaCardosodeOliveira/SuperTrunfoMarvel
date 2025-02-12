@@ -12,6 +12,7 @@ submenus. A interface deverá ser fácil e intuitiva, seja criativo, utilize cor
 Trate erros do usuário com mensagens e alertas;
 */
 
+/*
 #ifndef MENU_H
 #define MENU_H
 #include <stdio.h>
@@ -44,3 +45,13 @@ void chamaMenu(Cartas *vetor, int *contador);
 
 #endif
 
+*/
+
+#ifndef MENU_H
+#define MENU_H
+
+#include "deck.h"
+
+void exibir_menu(Deck *deck);
+
+#endif // MENU_H
